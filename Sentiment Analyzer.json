@@ -1,0 +1,233 @@
+{
+  "name": "Sentiment Analyzer",
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        0,
+        0
+      ],
+      "id": "9492b6e7-ebd2-4592-abfa-b44625c4b2b0",
+      "name": "When chat message received",
+      "webhookId": "8b3d4c89-6987-472b-951d-8a6fb7f617fc"
+    },
+    {
+      "parameters": {
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "You are a Sentiment Analyzer specialized in restaurant reviews and customer feedback.\n\nYour task is to analyze a customer's message about their restaurant experience and return:\n\n1. Sentiment: Positive / Negative / Neutral\n2. Explanation: A brief reason (1–2 sentences) based only on the customer’s message.\n\nGuidelines:\n- Focus on restaurant-related aspects: food quality, taste, service, staff behavior, cleanliness, waiting time, delivery speed, prices, etc.\n- Do not add any advice, extra comments, or assumptions.\n- Only classify the sentiment and explain why.\n- Your output must follow this JSON format:\n\n{\n  \"sentiment\": \"...\",\n  \"explanation\": \"...\"\n}\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        208,
+        0
+      ],
+      "id": "f151e4e6-018e-45a6-9eff-5c4871a10b83",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": "openai/gpt-oss-20b:free",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        208,
+        192
+      ],
+      "id": "e6547d62-3f45-40ce-8be3-323c9d641064",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "xHHasrP9nNkXmSWW",
+          "name": "EzzNazzal10"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"sentiment\": \"...\",\n  \"explanation\": \"...\"\n}\n",
+        "autoFix": true
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        336,
+        192
+      ],
+      "id": "9d7a7510-f90f-4b8d-8d57-16df24f7b715",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1DkbNAkahpTtgxkGq8nucihEbs7liKutB6LA9fQGjztM",
+          "mode": "list",
+          "cachedResultName": "Sentiment Analyzer",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1DkbNAkahpTtgxkGq8nucihEbs7liKutB6LA9fQGjztM/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "الورقة1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1DkbNAkahpTtgxkGq8nucihEbs7liKutB6LA9fQGjztM/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Review": "={{ $('When chat message received').item.json.chatInput }}",
+            "Sentiment": "={{ $json.output.sentiment }}",
+            "Explaination": "={{ $json.output.explanation }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Review",
+              "displayName": "Review",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Sentiment",
+              "displayName": "Sentiment",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Explaination",
+              "displayName": "Explaination",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        560,
+        0
+      ],
+      "id": "848c55d5-d92f-493e-8c24-b88a5819e63a",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "utsb1Smt10OvSudI",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "openai/gpt-oss-20b:free",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        336,
+        320
+      ],
+      "id": "52825f4e-baac-4080-b1e0-67754772ae2a",
+      "name": "OpenRouter Chat Model1",
+      "credentials": {
+        "openRouterApi": {
+          "id": "xHHasrP9nNkXmSWW",
+          "name": "EzzNazzal10"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Structured Output Parser",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "31c228bd-5461-49af-a916-5403ae102bfc",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "4b60e1f5a62aa40e5b0ecd2b712acc4afe7577b753ab928f1f5e9bfa89afed88"
+  },
+  "id": "KgvDjPpn1wJIX1rt",
+  "tags": []
+}
