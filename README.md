@@ -103,7 +103,8 @@ Google Sheets
 
 📷 Workflow Screenshot
 
-(Add your workflow screenshot here)
+<img width="1919" height="909" alt="image" src="https://github.com/user-attachments/assets/c967266a-232c-4999-b790-10758f0809c8" />
+
 
 🤝 Contributing
 
