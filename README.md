@@ -103,7 +103,11 @@ Google Sheets
 
 📷 Workflow Screenshot
 
-<img width="1919" height="909" alt="image" src="https://github.com/user-attachments/assets/c967266a-232c-4999-b790-10758f0809c8" />
+<img width="1919" height="916" alt="image" src="https://github.com/user-attachments/assets/2c490545-bd78-4dae-823d-81d991af4358" />
+
+📷 Google Sheet Screenshot
+
+<img width="1918" height="912" alt="image" src="https://github.com/user-attachments/assets/8d7716e8-b05a-4f88-aad0-64fefb32ea31" />
 
 
 🤝 Contributing
